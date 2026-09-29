@@ -1,0 +1,183 @@
+[
+  {
+    "id": "mumbai-air-3",
+    "city": "Mumbai",
+    "category": "Air quality",
+    "title": "Mumbai air quality forecast on SAFAR",
+    "summary": "IITM's SAFAR system used to publish Mumbai air quality forecasts.",
+    "details": [
+      "Mumbai is still listed on the SAFAR home page.",
+      "The newest report linked is from Diwali 2023."
+    ],
+    "when": [
+      "air-moderate",
+      "air-high"
+    ],
+    "sources": [
+      {
+        "title": "IITM: SAFAR India",
+        "url": "https://safar.tropmet.res.in/"
+      }
+    ],
+    "verification": {
+      "status": "flagged",
+      "lastChecked": "2026-09-29",
+      "method": "schema+spot+freshness",
+      "flag_reason": "Spot and freshness checks failed: the Mumbai data page could not be opened (SSL error), and the newest report linked dates from 2023."
+    }
+  },
+  {
+    "id": "mumbai-air-4",
+    "city": "Mumbai",
+    "category": "Air quality",
+    "title": "CPCB National AQI web portal",
+    "summary": "The Central Pollution Control Board's web dashboard for station-level AQI.",
+    "details": [
+      "The Sameer app (verified) covers the same data."
+    ],
+    "when": [
+      "air-moderate",
+      "air-high"
+    ],
+    "sources": [
+      {
+        "title": "CPCB: AQI India",
+        "url": "https://airquality.cpcb.gov.in/AQI_India/"
+      }
+    ],
+    "verification": {
+      "status": "flagged",
+      "lastChecked": "2026-09-29",
+      "method": "schema+spot+freshness",
+      "flag_reason": "Spot check failed: the page returned a 404 in a browser today and the CCR dashboard loaded blank."
+    }
+  },
+  {
+    "id": "mumbai-water-5",
+    "city": "Mumbai",
+    "category": "Water and flooding",
+    "title": "Monsoon high-tide dates (tides above 4.5 m)",
+    "summary": "BMC publishes dates and times of high tides above 4.5 m, when heavy rain is most likely to cause waterlogging.",
+    "details": [
+      "2026 table runs from 14 June to 30 September 2026.",
+      "Last listed: 30 September 2026, 01:53, 4.56 m."
+    ],
+    "when": [
+      "rain-heavy",
+      "flood-risk"
+    ],
+    "sources": [
+      {
+        "title": "BMC Disaster Management: Monsoon High Tide Details",
+        "url": "https://dm.mcgm.gov.in/monsoon-high-tide-details"
+      }
+    ],
+    "verification": {
+      "status": "flagged",
+      "lastChecked": "2026-09-29",
+      "method": "schema+spot+freshness",
+      "flag_reason": "Freshness check failed: the 2026 table ends on 30 September 2026; re-check when BMC posts the 2027 table."
+    }
+  },
+  {
+    "id": "mumbai-water-6",
+    "city": "Mumbai",
+    "category": "Water and flooding",
+    "title": "Rainwater harvesting for housing societies",
+    "summary": "BMC requires rainwater harvesting on plots over 1,000 sq m developed after 1 October 2002.",
+    "details": [
+      "BMC's Rain Water Harvesting Cell is listed with phone 22620251 ext. 2309."
+    ],
+    "when": [
+      "any"
+    ],
+    "sources": [
+      {
+        "title": "BMC: Water Conservation and Rainwater Harvesting",
+        "url": "https://portal.mcgm.gov.in/irj/go/km/docs/documents/MCGM%20Department%20List/Solid%20Waste%20Management/Rain%20Water%20Harvesting/Water%20Conservation%20and%20Rainwater%20Harvesting%20EN.pdf"
+      }
+    ],
+    "verification": {
+      "status": "flagged",
+      "lastChecked": "2026-09-29",
+      "method": "schema+spot+freshness",
+      "flag_reason": "Freshness check failed: the only official source is dated October 2003, and the help cell's contact details could not be confirmed as current."
+    }
+  },
+  {
+    "id": "mumbai-waste-4",
+    "city": "Mumbai",
+    "category": "Waste and reuse",
+    "title": "BMC Solid Waste Management Bye-laws 2025",
+    "summary": "New bye-laws on segregation categories, user charges and on-site composting for bulk generators.",
+    "details": [
+      "Bulk generators: plots over 5,000 sq m or more than 100 kg of waste a day."
+    ],
+    "when": [
+      "any"
+    ],
+    "sources": [
+      {
+        "title": "BMC: SWM Bye-laws 2025 (English version)",
+        "url": "https://portal.mcgm.gov.in/irj/go/km/docs/documents/MCGM%20Department%20List/ChiefEngineerSolidWasteManagement/RTI%20Manuals/BMC-SWM-Byelaws2025-version%20English.pdf"
+      }
+    ],
+    "verification": {
+      "status": "flagged",
+      "lastChecked": "2026-09-29",
+      "method": "schema+spot+freshness",
+      "flag_reason": "Spot check failed: the document is marked as a February 2025 draft for vetting and its notification date is blank, so it cannot be treated as rules in force."
+    }
+  },
+  {
+    "id": "mumbai-transport-3",
+    "city": "Mumbai",
+    "category": "Getting around",
+    "title": "Free home EV charger installation from Tata Power",
+    "summary": "Tata Power Mumbai describes a demand-side programme that installs EV chargers at consumer premises at no cost.",
+    "details": [
+      "3.3 kW chargers for two-wheelers, 7.4 kW for four-wheelers.",
+      "Chargers mainly run off-peak, 12 am to 6 am."
+    ],
+    "when": [
+      "any"
+    ],
+    "sources": [
+      {
+        "title": "Tata Power Mumbai: Green Energy",
+        "url": "https://www.tatapower.com/energy-solutions/distribution/mumbai/green-energy"
+      }
+    ],
+    "verification": {
+      "status": "flagged",
+      "lastChecked": "2026-09-29",
+      "method": "schema+spot+freshness",
+      "flag_reason": "Spot check incomplete: the page gives no eligibility rules, application route or end date, so it is unclear whether the programme is open."
+    }
+  },
+  {
+    "id": "mumbai-heat-5",
+    "city": "Mumbai",
+    "category": "Heat",
+    "title": "Cool roofs for homes in informal settlements",
+    "summary": "Non-profit pilots in Mumbai have fitted reflective roofing to cut indoor heat in informal settlements.",
+    "details": [
+      "A 2023 pilot was reported at Nargis Dutt Nagar, Bandra West."
+    ],
+    "when": [
+      "heat-high"
+    ],
+    "sources": [
+      {
+        "title": "Citizen Matters: Informal settlements try out new cool roof solutions",
+        "url": "https://citizenmatters.in/new-cool-roof-solutions-heat-in-informal-settlements/"
+      }
+    ],
+    "verification": {
+      "status": "flagged",
+      "lastChecked": "2026-09-29",
+      "method": "schema+spot+freshness",
+      "flag_reason": "Spot check failed: the only source is a news article; no official or organisation page shows a programme residents can currently join."
+    }
+  }
+]

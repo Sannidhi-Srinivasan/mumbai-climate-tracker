@@ -1,0 +1,547 @@
+[
+  {
+    "id": "mumbai-heat-1",
+    "city": "Mumbai",
+    "category": "Heat",
+    "title": "What to do in a heatwave: BMC do's and don'ts",
+    "summary": "BMC's official heatwave guidance for residents, including how to help someone with sunstroke.",
+    "details": [
+      "Avoid going out in the sun, especially between 12 noon and 3 pm.",
+      "Drink water often even if not thirsty; use ORS, lassi, buttermilk, lemon water or torani.",
+      "Avoid alcohol, tea, coffee and carbonated soft drinks, which dehydrate the body.",
+      "Keep your home cool with curtains or shutters and open windows at night.",
+      "For sunstroke: lay the person in shade, wipe with a wet cloth, give ORS and take them to the nearest health centre."
+    ],
+    "when": [
+      "heat-high",
+      "heat-extreme"
+    ],
+    "sources": [
+      {
+        "title": "BMC Disaster Management: Do's and Don'ts (Heatwave)",
+        "url": "https://dm.mcgm.gov.in/dos_and_donts"
+      }
+    ],
+    "verification": {
+      "status": "verified",
+      "lastChecked": "2026-09-29",
+      "method": "schema+spot+freshness"
+    }
+  },
+  {
+    "id": "mumbai-heat-2",
+    "city": "Mumbai",
+    "category": "Heat",
+    "title": "Check IMD heat and weather warnings for Greater Mumbai",
+    "summary": "IMD's urban weather page for Greater Mumbai gives station observations, heatwave monitoring, nowcasts and district warnings.",
+    "details": [
+      "Shows current readings for Mumbai City, Santacruz and suburban stations.",
+      "Includes heatwave/coldwave forecasts, district-wise warnings and thunderstorm nowcasts.",
+      "Use it before planning outdoor work or travel on hot or stormy days."
+    ],
+    "when": [
+      "heat-high",
+      "heat-extreme",
+      "rain-heavy"
+    ],
+    "sources": [
+      {
+        "title": "India Meteorological Department: Urban Meteorology, Greater Mumbai",
+        "url": "https://mausam.imd.gov.in/mumbaiums/"
+      },
+      {
+        "title": "IMD: Regional Meteorological Centre Mumbai",
+        "url": "https://mausam.imd.gov.in/mumbai/"
+      }
+    ],
+    "verification": {
+      "status": "verified",
+      "lastChecked": "2026-09-29",
+      "method": "schema+spot+freshness"
+    }
+  },
+  {
+    "id": "mumbai-heat-3",
+    "city": "Mumbai",
+    "category": "Heat",
+    "title": "See the live heat index at your nearest BMC weather station",
+    "summary": "BMC's Disaster Management portal shows 15-minute readings, including heat index and rainfall, for a station you pick.",
+    "details": [
+      "Select your area under Weather Updates to see temperature, humidity, heat index and rainfall.",
+      "Readings are the last 15 minutes of data from BMC weather stations.",
+      "The same page shows IMD's 24- and 48-hour forecast for the city and suburbs."
+    ],
+    "when": [
+      "heat-high",
+      "heat-extreme",
+      "rain-heavy"
+    ],
+    "sources": [
+      {
+        "title": "BMC Disaster Management: Weather Updates",
+        "url": "https://dm.mcgm.gov.in/"
+      }
+    ],
+    "verification": {
+      "status": "verified",
+      "lastChecked": "2026-09-29",
+      "method": "schema+spot+freshness"
+    }
+  },
+  {
+    "id": "mumbai-heat-4",
+    "city": "Mumbai",
+    "category": "Heat",
+    "title": "Call 108 for a free ambulance in a heatstroke emergency",
+    "summary": "Maharashtra Emergency Medical Services runs a free, 24x7 ambulance service on 108.",
+    "details": [
+      "Dial 108 (toll-free) from any phone.",
+      "The service is free of cost to patients and runs 24x7.",
+      "Aims to reach the nearest hospital within the 'golden hour'."
+    ],
+    "when": [
+      "heat-extreme"
+    ],
+    "sources": [
+      {
+        "title": "Maharashtra Public Health Department: Maharashtra Emergency Medical Services (MEMS)",
+        "url": "https://phd.maharashtra.gov.in/en/scheme/maharashtra-emergency-medical-services-mems/"
+      }
+    ],
+    "verification": {
+      "status": "verified",
+      "lastChecked": "2026-09-29",
+      "method": "schema+spot+freshness"
+    }
+  },
+  {
+    "id": "mumbai-air-1",
+    "city": "Mumbai",
+    "category": "Air quality",
+    "title": "Check hourly air quality (AQI) on the Sameer app",
+    "summary": "The Central Pollution Control Board's Sameer app gives hourly National AQI readings and lets you file air pollution complaints.",
+    "details": [
+      "Free on Android; published by the Central Pollution Control Board.",
+      "Shows hourly National Air Quality Index with colour codes.",
+      "Lets you register and track air pollution complaints."
+    ],
+    "when": [
+      "air-moderate",
+      "air-high"
+    ],
+    "sources": [
+      {
+        "title": "Google Play: Sameer (Central Pollution Control Board)",
+        "url": "https://play.google.com/store/apps/details?id=com.cpcb&hl=en_IN"
+      }
+    ],
+    "verification": {
+      "status": "verified",
+      "lastChecked": "2026-09-29",
+      "method": "schema+spot+freshness"
+    }
+  },
+  {
+    "id": "mumbai-air-2",
+    "city": "Mumbai",
+    "category": "Air quality",
+    "title": "Report construction dust or garbage burning to BMC",
+    "summary": "BMC's air pollution rules require dust controls on building sites and ban open burning; you can report breaches through BMC's complaint channels.",
+    "details": [
+      "Rules: sites over 1 acre need barricades at least 35 ft high (25 ft under 1 acre), plus water fogging and tyre washing at exits.",
+      "Open burning is completely banned anywhere in BMC limits.",
+      "Report on 1916 (24x7), the MyBMC app, or WhatsApp +91 8999228999.",
+      "Online complaints and status tracking: marg.mcgm.gov.in."
+    ],
+    "when": [
+      "any",
+      "air-high"
+    ],
+    "sources": [
+      {
+        "title": "BMC: Guidelines for Air Pollution Mitigation (25.10.2023)",
+        "url": "https://www.mcgm.gov.in/irj/go/km/docs/documents/Environment/Resources/Guidelines%20for%20Air%20Pollution%20Mitigation%20%20-%20MGC-F-1102%20DTD.25.10.2023.pdf"
+      },
+      {
+        "title": "MyBMC: Complaint registration",
+        "url": "https://portal.mcgm.gov.in/irj/portal/anonymous/qlcomplaintreg?guest_user=english"
+      }
+    ],
+    "verification": {
+      "status": "verified",
+      "lastChecked": "2026-09-29",
+      "method": "schema+spot+freshness"
+    }
+  },
+  {
+    "id": "mumbai-energy-1",
+    "city": "Mumbai",
+    "category": "Energy at home",
+    "title": "Rooftop solar subsidy for your home (PM Surya Ghar)",
+    "summary": "A central government subsidy for households that install rooftop solar; apply online with your electricity account number.",
+    "details": [
+      "Subsidy: Rs 30,000 per kW up to 2 kW, Rs 18,000 per kW for additional capacity up to 3 kW, capped at Rs 78,000.",
+      "Suggested size: 1–2 kW for 0–150 units a month, 2–3 kW for 150–300 units.",
+      "Apply at pmsuryaghar.gov.in with your mobile number, then pick your state, district, utility and consumer number.",
+      "The portal says the scheme closes on 31 March 2027."
+    ],
+    "when": [
+      "any"
+    ],
+    "sources": [
+      {
+        "title": "MNRE: PM Surya Ghar Muft Bijli Yojana national portal",
+        "url": "https://pmsuryaghar.gov.in/"
+      }
+    ],
+    "verification": {
+      "status": "verified",
+      "lastChecked": "2026-09-29",
+      "method": "schema+spot+freshness"
+    }
+  },
+  {
+    "id": "mumbai-energy-2",
+    "city": "Mumbai",
+    "category": "Energy at home",
+    "title": "Rooftop solar subsidy for housing societies (PM Surya Ghar)",
+    "summary": "Group housing societies and RWAs can claim a subsidy for solar that powers common areas, including EV charging.",
+    "details": [
+      "Rs 18,000 per kW for common facilities, including EV charging.",
+      "Up to 500 kW per society, at 3 kW per house, including residents' own rooftop plants.",
+      "Apply on the same national portal before the 31 March 2027 closing date."
+    ],
+    "when": [
+      "any"
+    ],
+    "sources": [
+      {
+        "title": "MNRE: PM Surya Ghar Muft Bijli Yojana national portal",
+        "url": "https://pmsuryaghar.gov.in/"
+      }
+    ],
+    "verification": {
+      "status": "verified",
+      "lastChecked": "2026-09-29",
+      "method": "schema+spot+freshness"
+    }
+  },
+  {
+    "id": "mumbai-energy-3",
+    "city": "Mumbai",
+    "category": "Energy at home",
+    "title": "Switch to Adani Electricity's green tariff",
+    "summary": "Adani Electricity consumers in the suburbs can opt to have their supply matched with renewable power for a small extra charge.",
+    "details": [
+      "Extra charge: Rs 0.25 per unit, as stated on the page.",
+      "Opt in through 'Switch To Green' on the green tariff page.",
+      "A green certificate is issued to participating consumers.",
+      "Customer care: 19122 (toll-free, 24x7)."
+    ],
+    "when": [
+      "any"
+    ],
+    "sources": [
+      {
+        "title": "Adani Electricity Mumbai: Green Tariff",
+        "url": "https://www.adanielectricity.com/green-tariff"
+      }
+    ],
+    "verification": {
+      "status": "verified",
+      "lastChecked": "2026-09-29",
+      "method": "schema+spot+freshness"
+    }
+  },
+  {
+    "id": "mumbai-energy-4",
+    "city": "Mumbai",
+    "category": "Energy at home",
+    "title": "Apply for rooftop solar net metering with BEST",
+    "summary": "BEST electricity consumers in the island city can connect a rooftop solar system and get credit for power exported to the grid.",
+    "details": [
+      "Apply online with system details; BEST acknowledges within 3 working days.",
+      "Technical feasibility within 15 working days; approval within 7 working days, valid for 6 months.",
+      "After installation, BEST tests and commissions within 10 working days, then you sign the net metering agreement."
+    ],
+    "when": [
+      "any"
+    ],
+    "sources": [
+      {
+        "title": "BEST Undertaking: Net Metering",
+        "url": "https://www.bestundertaking.com/page.asp?i=34"
+      }
+    ],
+    "verification": {
+      "status": "verified",
+      "lastChecked": "2026-09-29",
+      "method": "schema+spot+freshness"
+    }
+  },
+  {
+    "id": "mumbai-water-1",
+    "city": "Mumbai",
+    "category": "Water and flooding",
+    "title": "Report waterlogging, fallen trees or blocked drains on 1916",
+    "summary": "BMC's 24x7 central helpline takes civic and disaster complaints, including flooding and drainage.",
+    "details": [
+      "Call 1916, 24x7.",
+      "WhatsApp: +91 8999228999 (MyBMC Assist).",
+      "Or file online at marg.mcgm.gov.in and track status with your complaint number."
+    ],
+    "when": [
+      "any",
+      "rain-heavy",
+      "flood-risk"
+    ],
+    "sources": [
+      {
+        "title": "BMC Disaster Management: Central Complaint Registration System",
+        "url": "https://dm.mcgm.gov.in/central-complaint-registration-system"
+      },
+      {
+        "title": "MyBMC: Complaint registration",
+        "url": "https://portal.mcgm.gov.in/irj/portal/anonymous/qlcomplaintreg?guest_user=english"
+      }
+    ],
+    "verification": {
+      "status": "verified",
+      "lastChecked": "2026-09-29",
+      "method": "schema+spot+freshness"
+    }
+  },
+  {
+    "id": "mumbai-water-2",
+    "city": "Mumbai",
+    "category": "Water and flooding",
+    "title": "Get flood and rain alerts on the Disaster Management BMC app",
+    "summary": "BMC's official app gives 15-minute rainfall and weather readings, tide times, IMD nowcast warnings and nearby shelters.",
+    "details": [
+      "Free on Android, published by Brihanmumbai Municipal Corporation.",
+      "Data from 60+ automatic weather stations, updated every 15 minutes.",
+      "Shows tides, traffic and transit status, IMD nowcasts, and nearby police stations, hospitals, shelters and flood-prone areas.",
+      "Has an SOS button for emergency contacts."
+    ],
+    "when": [
+      "rain-heavy",
+      "flood-risk"
+    ],
+    "sources": [
+      {
+        "title": "Google Play: Disaster Management BMC",
+        "url": "https://play.google.com/store/apps/details?id=com.disastermanagement.android&hl=en_IN"
+      }
+    ],
+    "verification": {
+      "status": "verified",
+      "lastChecked": "2026-09-29",
+      "method": "schema+spot+freshness"
+    }
+  },
+  {
+    "id": "mumbai-water-3",
+    "city": "Mumbai",
+    "category": "Water and flooding",
+    "title": "What to do before, during and after urban flooding",
+    "summary": "BMC's official checklist for Mumbai's monsoon flooding.",
+    "details": [
+      "Stay home if heavy rain and high tide coincide.",
+      "Keep a torch, food, drinking water, dry clothes and documents ready; move valuables higher.",
+      "Switch off electricity and gas at the mains; don't walk or drive through flowing water.",
+      "Afterwards, drink only boiled or chlorinated water and don't eat food that touched floodwater."
+    ],
+    "when": [
+      "rain-heavy",
+      "flood-risk"
+    ],
+    "sources": [
+      {
+        "title": "BMC Disaster Management: Do's and Don'ts (Urban Floods)",
+        "url": "https://dm.mcgm.gov.in/dos_and_donts"
+      }
+    ],
+    "verification": {
+      "status": "verified",
+      "lastChecked": "2026-09-29",
+      "method": "schema+spot+freshness"
+    }
+  },
+  {
+    "id": "mumbai-water-4",
+    "city": "Mumbai",
+    "category": "Water and flooding",
+    "title": "BMC Flood Preparedness Guidelines 2026: your ward's flood plan and contacts",
+    "summary": "BMC's 319-page monsoon handbook for 2026, with ward-by-ward contacts, flood-vulnerable areas and high-tide days.",
+    "details": [
+      "Section II is a directory for every ward (from page 95), so you can find your ward office's contacts.",
+      "Includes each ward's action plan, flood vulnerability and the year's high-tide and neap-tide days.",
+      "Section III covers the fire brigade, beach safety, fallen trees and branches, public health and traffic police.",
+      "Open the embedded PDF on the page; it is large, so it may take a minute to load on mobile data."
+    ],
+    "when": [
+      "any",
+      "rain-heavy",
+      "flood-risk"
+    ],
+    "sources": [
+      {
+        "title": "BMC Disaster Management: Flood Preparedness Guidelines 2026",
+        "url": "https://dm.mcgm.gov.in/flood-preparedness-guidelines"
+      },
+      {
+        "title": "BMC: Flood Preparedness Guidelines 2026 (PDF)",
+        "url": "https://dm.mcgm.gov.in/assets/pdf/FPG%202021.pdf"
+      }
+    ],
+    "verification": {
+      "status": "verified",
+      "lastChecked": "2026-09-29",
+      "method": "schema+spot+freshness"
+    }
+  },
+  {
+    "id": "mumbai-transport-1",
+    "city": "Mumbai",
+    "category": "Getting around",
+    "title": "Buy metro, bus and train tickets in one app (Mumbai One)",
+    "summary": "The official Mumbai One app plans trips and sells QR tickets across metro, bus and suburban routes.",
+    "details": [
+      "Published by Maha Mumbai Metro Operation Corporation Ltd (MMMOCL).",
+      "QR tickets for contactless travel, including return tickets on Metro Lines 1 and 3.",
+      "Compares routes across operators to find the fastest or cheapest option."
+    ],
+    "when": [
+      "any"
+    ],
+    "sources": [
+      {
+        "title": "Google Play: Mumbai One (MMMOCL)",
+        "url": "https://play.google.com/store/apps/details?id=com.mmrda&hl=en_IN"
+      },
+      {
+        "title": "App Store: Mumbai One",
+        "url": "https://apps.apple.com/in/app/mumbai-one/id6478221525"
+      }
+    ],
+    "verification": {
+      "status": "verified",
+      "lastChecked": "2026-09-29",
+      "method": "schema+spot+freshness"
+    }
+  },
+  {
+    "id": "mumbai-transport-2",
+    "city": "Mumbai",
+    "category": "Getting around",
+    "title": "Maharashtra EV Policy 2025: tax waiver and purchase incentive",
+    "summary": "Electric vehicles registered in Maharashtra until March 2030 pay no motor vehicle tax, and eligible models get a purchase incentive.",
+    "details": [
+      "100% motor vehicle tax exemption and registration fee waiver for EVs registered during the policy period.",
+      "E-two-wheelers: 10% of ex-factory cost, up to Rs 10,000 (first 1,00,000 vehicles).",
+      "Private e-cars: 10% of ex-factory cost, up to Rs 1,50,000 (first 10,000 vehicles).",
+      "No tolls for passenger EVs on the Mumbai–Pune Expressway, Samruddhi Mahamarg and Atal Setu.",
+      "Policy period: 1 April 2025 to 31 March 2030."
+    ],
+    "when": [
+      "any"
+    ],
+    "sources": [
+      {
+        "title": "Maharashtra Transport Department: EV Policy 2025 GR (23.05.2025)",
+        "url": "https://transport.maharashtra.gov.in/Site/Upload/GR/EV%20Policy%202025%20dated%2023-05-2025.pdf"
+      }
+    ],
+    "verification": {
+      "status": "verified",
+      "lastChecked": "2026-09-29",
+      "method": "schema+spot+freshness"
+    }
+  },
+  {
+    "id": "mumbai-waste-1",
+    "city": "Mumbai",
+    "category": "Waste and reuse",
+    "title": "Book free debris pickup after home repairs",
+    "summary": "BMC collects construction and demolition waste from your door; small loads are free.",
+    "details": [
+      "Up to 500 kg: free transport and processing.",
+      "Book on the BMC C&D waste app or by phone.",
+      "City and Eastern Suburbs: 1800-202-6364. Western Suburbs: 1800-210-9976.",
+      "Above 500 kg, charges apply under the C&D Waste Management Policy 2025."
+    ],
+    "when": [
+      "any"
+    ],
+    "sources": [
+      {
+        "title": "BMC: C&D Waste (Debris) Services FAQ",
+        "url": "https://cnd.mcgm.gov.in/home/cdwaste-faq-en.html"
+      }
+    ],
+    "verification": {
+      "status": "verified",
+      "lastChecked": "2026-09-29",
+      "method": "schema+spot+freshness"
+    }
+  },
+  {
+    "id": "mumbai-waste-2",
+    "city": "Mumbai",
+    "category": "Waste and reuse",
+    "title": "Find an authorised e-waste recycler in Mumbai",
+    "summary": "MPCB publishes the list of authorised e-waste recyclers, dismantlers and refurbishers, including several in Mumbai.",
+    "details": [
+      "The March 2024 list includes Mumbai recyclers, for example in Sakinaka and Kurla.",
+      "Hand old phones, laptops and appliances only to units on the authorised list.",
+      "MPCB's e-waste page also links the state authorisation registry."
+    ],
+    "when": [
+      "any"
+    ],
+    "sources": [
+      {
+        "title": "MPCB: Electronic Waste",
+        "url": "https://mpcb.gov.in/en/waste-management/electronic-waste"
+      },
+      {
+        "title": "MPCB: Authorised e-waste recyclers and refurbishers (March 2024)",
+        "url": "https://mpcb.gov.in/sites/default/files/Establishment%20of%20MPCB/Seniority%20list/2014/Authorised_E-Waste_Recyclers_%26_Refurbishers-March-2024.pdf"
+      }
+    ],
+    "verification": {
+      "status": "verified",
+      "lastChecked": "2026-09-29",
+      "method": "schema+spot+freshness"
+    }
+  },
+  {
+    "id": "mumbai-waste-3",
+    "city": "Mumbai",
+    "category": "Waste and reuse",
+    "title": "Report single-use plastic being sold or used",
+    "summary": "Maharashtra bans many single-use plastic and thermocol items; MPCB runs a helpline for the ban.",
+    "details": [
+      "The ban comes under the Maharashtra Plastic and Thermocol Products Notification, 2018 (amended up to 30 November 2022).",
+      "MPCB single-use plastic ban helpline: (022) 24010437 or (022) 24020781 extension 323."
+    ],
+    "when": [
+      "any"
+    ],
+    "sources": [
+      {
+        "title": "MPCB: Plastic Waste",
+        "url": "https://mpcb.gov.in/en/waste-management/plastic-waste"
+      },
+      {
+        "title": "MPCB: Home page (SUP ban helpline)",
+        "url": "https://www.mpcb.gov.in/"
+      }
+    ],
+    "verification": {
+      "status": "verified",
+      "lastChecked": "2026-09-29",
+      "method": "schema+spot+freshness"
+    }
+  }
+]
