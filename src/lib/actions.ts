@@ -28,18 +28,21 @@ export type FlaggedAction = ActionEntry & {
   };
 };
 
-async function readJsonFile<T>(relativePath: string): Promise<T> {
-  const filePath = path.join(process.cwd(), relativePath);
+// The "data" segment is a literal here (not a variable) so the build tool can
+// see this only ever reads from the data/ folder, instead of conservatively
+// bundling the whole project "just in case" a different folder was meant.
+async function readDataFile<T>(filename: string): Promise<T> {
+  const filePath = path.join(process.cwd(), "data", filename);
   const raw = await readFile(filePath, "utf8");
   return JSON.parse(raw) as T;
 }
 
 export async function loadVerifiedActions(): Promise<VerifiedAction[]> {
-  return readJsonFile<VerifiedAction[]>("data/verified.json");
+  return readDataFile<VerifiedAction[]>("verified.json");
 }
 
 export async function loadFlaggedActions(): Promise<FlaggedAction[]> {
-  return readJsonFile<FlaggedAction[]>("data/flagged.json");
+  return readDataFile<FlaggedAction[]>("flagged.json");
 }
 
 // "any" always applies. Anything else only applies when that condition is live today.
