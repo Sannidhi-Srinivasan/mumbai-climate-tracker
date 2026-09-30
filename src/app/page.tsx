@@ -1,4 +1,10 @@
+import Link from "next/link";
 import { fetchClimateSnapshot, type Panel } from "@/lib/climate";
+import { loadVerifiedActions, rankTodayActions, reasonText } from "@/lib/actions";
+
+const TODAY_ACTIONS_LIMIT = 8;
+import { ActionCard } from "@/components/ActionCard";
+import { ActionsExplorer } from "@/components/ActionsExplorer";
 
 // Maps each plain-word level to colors AND a text badge, so the meaning never
 // depends on color alone (important for colorblind visitors). The badge uses a
@@ -36,11 +42,20 @@ function ClimateCard({ title, panel }: { title: string; panel: Panel }) {
 }
 
 export default async function Home() {
-  const snapshot = await fetchClimateSnapshot();
+  const [snapshot, verifiedActions] = await Promise.all([
+    fetchClimateSnapshot(),
+    loadVerifiedActions(),
+  ]);
+
+  const todayActions = rankTodayActions(
+    verifiedActions,
+    snapshot.activeConditions,
+    TODAY_ACTIONS_LIMIT,
+  );
 
   return (
     <div className="flex flex-col flex-1 items-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex w-full max-w-3xl flex-col gap-8 px-6 py-16 sm:px-16">
+      <main className="flex w-full max-w-5xl flex-col gap-8 px-6 py-16 sm:px-16">
         <div className="flex flex-col gap-2">
           <h1 className="text-3xl font-semibold tracking-tight text-black dark:text-zinc-50">
             Mumbai Climate Tracker
@@ -61,6 +76,49 @@ export default async function Home() {
           Heat and air readings come from Open-Meteo&apos;s weather and air quality feeds.
           River flow comes from Open-Meteo&apos;s flood feed, a large-scale model — not an
           official Mumbai flood warning.
+        </p>
+
+        <section className="flex flex-col gap-4">
+          <div className="flex flex-col gap-1">
+            <h2 className="text-xl font-semibold tracking-tight text-black dark:text-zinc-50">
+              What to do today
+            </h2>
+            <p className="text-sm text-zinc-600 dark:text-zinc-400">
+              The {TODAY_ACTIONS_LIMIT} actions that fit today&apos;s readings most closely.
+            </p>
+          </div>
+          {todayActions.length === 0 ? (
+            <p className="text-sm text-zinc-500 dark:text-zinc-400">
+              No verified actions yet. Check back once the action list is added.
+            </p>
+          ) : (
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+              {todayActions.map(({ action, matched }) => (
+                <ActionCard key={action.id} action={action} reason={reasonText(matched)} />
+              ))}
+            </div>
+          )}
+        </section>
+
+        <section className="flex flex-col gap-4">
+          <div className="flex flex-col gap-1">
+            <h2 className="text-xl font-semibold tracking-tight text-black dark:text-zinc-50">
+              All actions
+            </h2>
+            <p className="text-sm text-zinc-600 dark:text-zinc-400">
+              Browse everything, search, or filter by category. Each card is tagged
+              depending on whether it applies today.
+            </p>
+          </div>
+          <ActionsExplorer actions={verifiedActions} activeConditions={snapshot.activeConditions} />
+        </section>
+
+        <p className="text-xs text-zinc-500 dark:text-zinc-400">
+          Curious how these actions get checked?{" "}
+          <Link href="/how-its-checked" className="font-medium text-sky-700 underline underline-offset-2 dark:text-sky-400">
+            See how it&apos;s checked
+          </Link>
+          .
         </p>
       </main>
     </div>

@@ -14,10 +14,24 @@ export type Panel = {
   readingTime: string;
 };
 
+// The condition tags actions in data/verified.json and data/flagged.json use in
+// their "when" field, matched against today's live readings.
+export type Condition =
+  | "any"
+  | "heat-high"
+  | "heat-extreme"
+  | "cold-extreme"
+  | "air-moderate"
+  | "air-high"
+  | "rain-heavy"
+  | "flood-risk";
+
 export type ClimateSnapshot = {
   heat: Panel;
   air: Panel;
   rainFlood: Panel;
+  /** Which condition tags apply right now, based on the raw readings above. */
+  activeConditions: Condition[];
 };
 
 // "Fetch" means: ask another service on the internet for data and wait for its answer.
@@ -46,7 +60,7 @@ function formatMumbaiDate(isoDateString: string | undefined): string {
 
 // --- Heat: feels-like temperature, from the weather feed ---
 
-async function fetchHeat(): Promise<Panel> {
+async function fetchHeat(): Promise<{ panel: Panel; feelsLikeC: number | null }> {
   const url =
     `https://api.open-meteo.com/v1/forecast?latitude=${MUMBAI_LAT}&longitude=${MUMBAI_LON}` +
     `&current=apparent_temperature&timezone=Asia%2FKolkata`;
@@ -75,16 +89,19 @@ async function fetchHeat(): Promise<Panel> {
   }
 
   return {
-    value: feelsLikeC !== null ? `${Math.round(feelsLikeC)}°C feels-like` : "No reading",
-    label,
-    level,
-    readingTime: formatMumbaiTime(data.current?.time),
+    panel: {
+      value: feelsLikeC !== null ? `${Math.round(feelsLikeC)}°C feels-like` : "No reading",
+      label,
+      level,
+      readingTime: formatMumbaiTime(data.current?.time),
+    },
+    feelsLikeC,
   };
 }
 
 // --- Air: US Air Quality Index, from the air quality feed ---
 
-async function fetchAir(): Promise<Panel> {
+async function fetchAir(): Promise<{ panel: Panel; usAqi: number | null }> {
   const url =
     `https://air-quality-api.open-meteo.com/v1/air-quality?latitude=${MUMBAI_LAT}&longitude=${MUMBAI_LON}` +
     `&current=us_aqi&timezone=Asia%2FKolkata`;
@@ -113,10 +130,13 @@ async function fetchAir(): Promise<Panel> {
   }
 
   return {
-    value: usAqi !== null ? `AQI ${Math.round(usAqi)}` : "No reading",
-    label,
-    level,
-    readingTime: formatMumbaiTime(data.current?.time),
+    panel: {
+      value: usAqi !== null ? `AQI ${Math.round(usAqi)}` : "No reading",
+      label,
+      level,
+      readingTime: formatMumbaiTime(data.current?.time),
+    },
+    usAqi,
   };
 }
 
@@ -125,7 +145,11 @@ async function fetchAir(): Promise<Panel> {
 // model (GloFAS), not an official Mumbai flood alert, so we describe it plainly as
 // "river flow vs. normal" rather than implying an official warning.
 
-async function fetchRainFlood(): Promise<Panel> {
+async function fetchRainFlood(): Promise<{
+  panel: Panel;
+  rainMm: number | null;
+  dischargeRatio: number | null;
+}> {
   const weatherUrl =
     `https://api.open-meteo.com/v1/forecast?latitude=${MUMBAI_LAT}&longitude=${MUMBAI_LON}` +
     `&daily=precipitation_sum&timezone=Asia%2FKolkata`;
@@ -196,25 +220,65 @@ async function fetchRainFlood(): Promise<Panel> {
     dischargeRatio !== null ? `river flow ${Math.round(dischargeRatio)}% of normal` : "river flow: no reading";
 
   return {
-    value: `${rainText}, ${flowText}`,
-    label,
-    level,
-    readingTime: `as of ${formatMumbaiDate(rainDate ?? floodDate)}`,
+    panel: {
+      value: `${rainText}, ${flowText}`,
+      label,
+      level,
+      readingTime: `as of ${formatMumbaiDate(rainDate ?? floodDate)}`,
+    },
+    rainMm,
+    dischargeRatio,
   };
 }
 
+// Turns today's raw readings into the condition tags used in data/verified.json
+// and data/flagged.json's "when" field. Thresholds match the skill's condition table.
+function computeActiveConditions(
+  feelsLikeC: number | null,
+  usAqi: number | null,
+  rainMm: number | null,
+  dischargeRatio: number | null,
+): Condition[] {
+  const conditions: Condition[] = ["any"];
+
+  if (feelsLikeC !== null) {
+    if (feelsLikeC >= 30) conditions.push("heat-high");
+    if (feelsLikeC >= 40) conditions.push("heat-extreme");
+    if (feelsLikeC <= -15) conditions.push("cold-extreme");
+  }
+  if (usAqi !== null) {
+    if (usAqi >= 51 && usAqi <= 100) conditions.push("air-moderate");
+    if (usAqi > 100) conditions.push("air-high");
+  }
+  if (rainMm !== null && rainMm >= 25) conditions.push("rain-heavy");
+  if (dischargeRatio !== null && dischargeRatio >= 150) conditions.push("flood-risk");
+
+  return conditions;
+}
+
+const FALLBACK_PANEL: Panel = {
+  value: "No reading",
+  label: "Unknown",
+  level: "moderate",
+  readingTime: "time unknown",
+};
+
 export async function fetchClimateSnapshot(): Promise<ClimateSnapshot> {
-  const [heat, air, rainFlood] = await Promise.all([
-    fetchHeat().catch(
-      (): Panel => ({ value: "No reading", label: "Unknown", level: "moderate", readingTime: "time unknown" }),
-    ),
-    fetchAir().catch(
-      (): Panel => ({ value: "No reading", label: "Unknown", level: "moderate", readingTime: "time unknown" }),
-    ),
-    fetchRainFlood().catch(
-      (): Panel => ({ value: "No reading", label: "Unknown", level: "moderate", readingTime: "date unknown" }),
-    ),
+  const [heatResult, airResult, rainFloodResult] = await Promise.all([
+    fetchHeat().catch(() => ({ panel: FALLBACK_PANEL, feelsLikeC: null })),
+    fetchAir().catch(() => ({ panel: FALLBACK_PANEL, usAqi: null })),
+    fetchRainFlood().catch(() => ({ panel: FALLBACK_PANEL, rainMm: null, dischargeRatio: null })),
   ]);
 
-  return { heat, air, rainFlood };
+  return {
+    heat: heatResult.panel,
+    air: airResult.panel,
+    rainFlood: rainFloodResult.panel,
+    activeConditions: computeActiveConditions(
+      heatResult.feelsLikeC,
+      airResult.usAqi,
+      rainFloodResult.rainMm,
+      rainFloodResult.dischargeRatio,
+    ),
+  };
 }
