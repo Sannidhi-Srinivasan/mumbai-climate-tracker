@@ -1,42 +1,81 @@
 import Link from "next/link";
 import { fetchClimateSnapshot, type Panel } from "@/lib/climate";
 import { loadVerifiedActions, rankTodayActions, reasonText } from "@/lib/actions";
-
-const TODAY_ACTIONS_LIMIT = 8;
 import { ActionCard } from "@/components/ActionCard";
 import { ActionsExplorer } from "@/components/ActionsExplorer";
+import { HeroGraphic, WaveDivider } from "@/components/HeroGraphic";
+import { SunIcon, WindIcon, WaveIcon } from "@/components/icons";
 
-// Maps each plain-word level to colors AND a text badge, so the meaning never
-// depends on color alone (important for colorblind visitors). The badge uses a
-// solid, saturated background in BOTH themes so levels stay visually distinct
-// even in dark mode, where pale tinted backgrounds all read as near-black.
+const TODAY_ACTIONS_LIMIT = 8;
+
+// Maps each plain-word level to colors, a text badge, AND a matching shadow
+// glow, so the meaning never depends on color alone (important for colorblind
+// visitors) and stays just as visible in dark mode as in light mode, where a
+// plain border can fade into a dark card. These four colors are fixed and
+// never reused for anything else on the site, so they always mean the same
+// thing at a glance.
 const LEVEL_STYLES: Record<
   Panel["level"],
-  { border: string; badgeBg: string; badgeText: string; badge: string }
+  { border: string; shadow: string; badgeBg: string; badgeText: string; badge: string }
 > = {
-  good: { border: "border-l-emerald-500", badgeBg: "bg-emerald-600", badgeText: "text-white", badge: "GOOD" },
-  moderate: { border: "border-l-amber-500", badgeBg: "bg-amber-500", badgeText: "text-black", badge: "MODERATE" },
-  poor: { border: "border-l-orange-500", badgeBg: "bg-orange-600", badgeText: "text-white", badge: "POOR" },
-  severe: { border: "border-l-red-600", badgeBg: "bg-red-600", badgeText: "text-white", badge: "SEVERE" },
+  good: {
+    border: "border-l-emerald-500",
+    shadow: "shadow-[0_8px_24px_-12px] shadow-emerald-500/50",
+    badgeBg: "bg-emerald-600",
+    badgeText: "text-white",
+    badge: "GOOD",
+  },
+  moderate: {
+    border: "border-l-amber-500",
+    shadow: "shadow-[0_8px_24px_-12px] shadow-amber-500/50",
+    badgeBg: "bg-amber-500",
+    badgeText: "text-black",
+    badge: "MODERATE",
+  },
+  poor: {
+    border: "border-l-orange-500",
+    shadow: "shadow-[0_8px_24px_-12px] shadow-orange-500/50",
+    badgeBg: "bg-orange-600",
+    badgeText: "text-white",
+    badge: "POOR",
+  },
+  severe: {
+    border: "border-l-red-600",
+    shadow: "shadow-[0_8px_24px_-12px] shadow-red-600/50",
+    badgeBg: "bg-red-600",
+    badgeText: "text-white",
+    badge: "SEVERE",
+  },
 };
 
-function ClimateCard({ title, panel }: { title: string; panel: Panel }) {
+const PANEL_ICONS = {
+  Heat: SunIcon,
+  "Air quality": WindIcon,
+  "Rain & flood": WaveIcon,
+} as const;
+
+function ClimateCard({ title, panel }: { title: keyof typeof PANEL_ICONS; panel: Panel }) {
   const styles = LEVEL_STYLES[panel.level];
+  const Icon = PANEL_ICONS[title];
   return (
     <div
-      className={`flex flex-col gap-3 rounded-2xl border border-l-4 border-black/[.06] bg-white p-6 dark:border-white/[.08] dark:bg-zinc-900 ${styles.border}`}
+      className={`flex flex-col gap-3 rounded-2xl border border-l-4 border-black/[.06] bg-surface p-6 dark:border-white/[.08] ${styles.border} ${styles.shadow}`}
     >
       <div className="flex items-center justify-between">
-        <h2 className="text-sm font-semibold uppercase tracking-wide text-zinc-500 dark:text-zinc-400">
+        <h2 className="flex items-center gap-1.5 text-sm font-semibold uppercase tracking-wide text-zinc-500 dark:text-zinc-400">
+          <Icon className="h-4 w-4" />
           {title}
         </h2>
         <span className={`rounded-full px-2 py-0.5 text-xs font-bold ${styles.badgeBg} ${styles.badgeText}`}>
           {styles.badge}
         </span>
       </div>
-      <p className="text-2xl font-semibold text-black dark:text-zinc-50">{panel.value}</p>
+      <p className="font-display text-2xl text-black dark:text-zinc-50">{panel.value}</p>
       <p className="text-base text-zinc-700 dark:text-zinc-300">{panel.label}</p>
-      <p className="text-xs text-zinc-500 dark:text-zinc-400">{panel.readingTime}</p>
+      <p className="flex items-center gap-1.5 text-xs text-zinc-500 dark:text-zinc-400">
+        <span className="motion-safe:animate-pulse h-1.5 w-1.5 rounded-full bg-teal-500" aria-hidden="true" />
+        {panel.readingTime}
+      </p>
     </div>
   );
 }
@@ -53,17 +92,30 @@ export default async function Home() {
     TODAY_ACTIONS_LIMIT,
   );
 
+  const today = new Date().toLocaleDateString("en-IN", {
+    timeZone: "Asia/Kolkata",
+    weekday: "long",
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  });
+
   return (
-    <div className="flex flex-col flex-1 items-center bg-zinc-50 font-sans dark:bg-black">
+    <div className="flex flex-col flex-1 items-center font-sans">
       <main className="flex w-full max-w-5xl flex-col gap-8 px-6 py-16 sm:px-16">
-        <div className="flex flex-col gap-2">
-          <h1 className="text-3xl font-semibold tracking-tight text-black dark:text-zinc-50">
-            Mumbai Climate Tracker
-          </h1>
-          <p className="max-w-xl text-base leading-7 text-zinc-600 dark:text-zinc-400">
-            Live heat, air quality, and rain/flood readings for Mumbai, India — plus local
-            climate actions you can take (coming soon).
-          </p>
+        <div className="flex flex-col gap-4">
+          <div className="h-32 w-full overflow-hidden rounded-2xl sm:h-44">
+            <HeroGraphic />
+          </div>
+          <div className="flex flex-col gap-2">
+            <h1 className="font-display whitespace-nowrap text-[clamp(1.9rem,6vw,4.25rem)] leading-none tracking-tight text-black dark:text-zinc-50">
+              Mumbai Climate Tracker
+            </h1>
+            <p className="flex items-center gap-2 text-sm font-medium text-teal-700 dark:text-teal-400">
+              <span className="motion-safe:animate-pulse h-2 w-2 rounded-full bg-teal-500" aria-hidden="true" />
+              Live data · {today}
+            </p>
+          </div>
         </div>
 
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
@@ -78,13 +130,15 @@ export default async function Home() {
           official Mumbai flood warning.
         </p>
 
+        <WaveDivider />
+
         <section className="flex flex-col gap-4">
           <div className="flex flex-col gap-1">
-            <h2 className="text-xl font-semibold tracking-tight text-black dark:text-zinc-50">
-              What to do today
+            <h2 className="font-display text-2xl tracking-tight text-black dark:text-zinc-50">
+              Climate Actions for today
             </h2>
             <p className="text-sm text-zinc-600 dark:text-zinc-400">
-              The {TODAY_ACTIONS_LIMIT} actions that fit today&apos;s readings most closely.
+              The {TODAY_ACTIONS_LIMIT} actions you can take based on Mumbai&apos;s climate today.
             </p>
           </div>
           {todayActions.length === 0 ? (
@@ -102,12 +156,12 @@ export default async function Home() {
 
         <section className="flex flex-col gap-4">
           <div className="flex flex-col gap-1">
-            <h2 className="text-xl font-semibold tracking-tight text-black dark:text-zinc-50">
+            <h2 className="font-display text-2xl tracking-tight text-black dark:text-zinc-50">
               All actions
             </h2>
             <p className="text-sm text-zinc-600 dark:text-zinc-400">
-              Browse everything, search, or filter by category. Each card is tagged
-              depending on whether it applies today.
+              Search or filter by category to find an action — each card shows whether it
+              applies to today&apos;s conditions.
             </p>
           </div>
           <ActionsExplorer actions={verifiedActions} activeConditions={snapshot.activeConditions} />
@@ -115,7 +169,7 @@ export default async function Home() {
 
         <p className="text-xs text-zinc-500 dark:text-zinc-400">
           Curious how these actions get checked?{" "}
-          <Link href="/how-its-checked" className="font-medium text-sky-700 underline underline-offset-2 dark:text-sky-400">
+          <Link href="/how-its-checked" className="font-medium text-teal-700 underline underline-offset-2 dark:text-teal-400">
             See how it&apos;s checked
           </Link>
           .
