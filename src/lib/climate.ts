@@ -83,7 +83,11 @@ export const FLOOD_LEVELS = {
 
 function formatMumbaiTime(isoString: string | undefined): string {
   if (!isoString) return "time unknown";
-  const date = new Date(isoString);
+  // Open-Meteo returns a bare "2026-09-30T22:30" with no timezone offset.
+  // Without "+05:30" attached, JavaScript assumes the SERVER's own timezone
+  // (Vercel's is UTC), silently shifting the time by 5.5 hours and sometimes
+  // into the next calendar day — which is why this line exists.
+  const date = new Date(`${isoString}+05:30`);
   if (Number.isNaN(date.getTime())) return "time unknown";
   return date.toLocaleString("en-IN", {
     timeZone: "Asia/Kolkata",
