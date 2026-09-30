@@ -5,48 +5,10 @@ import { ActionCard } from "@/components/ActionCard";
 import { ActionsExplorer } from "@/components/ActionsExplorer";
 import { HeroGraphic, WaveDivider } from "@/components/HeroGraphic";
 import { SunIcon, WindIcon, WaveIcon } from "@/components/icons";
+import { LEVEL_STYLES } from "@/lib/levelStyles";
+import { LevelsKeyModal } from "@/components/LevelsKeyModal";
 
 const TODAY_ACTIONS_LIMIT = 8;
-
-// Maps each plain-word level to colors, a text badge, AND a matching shadow
-// glow, so the meaning never depends on color alone (important for colorblind
-// visitors) and stays just as visible in dark mode as in light mode, where a
-// plain border can fade into a dark card. These four colors are fixed and
-// never reused for anything else on the site, so they always mean the same
-// thing at a glance.
-const LEVEL_STYLES: Record<
-  Panel["level"],
-  { border: string; shadow: string; badgeBg: string; badgeText: string; badge: string }
-> = {
-  good: {
-    border: "border-l-emerald-500",
-    shadow: "shadow-[0_8px_24px_-12px] shadow-emerald-500/50",
-    badgeBg: "bg-emerald-600",
-    badgeText: "text-white",
-    badge: "GOOD",
-  },
-  moderate: {
-    border: "border-l-amber-500",
-    shadow: "shadow-[0_8px_24px_-12px] shadow-amber-500/50",
-    badgeBg: "bg-amber-500",
-    badgeText: "text-black",
-    badge: "MODERATE",
-  },
-  poor: {
-    border: "border-l-orange-500",
-    shadow: "shadow-[0_8px_24px_-12px] shadow-orange-500/50",
-    badgeBg: "bg-orange-600",
-    badgeText: "text-white",
-    badge: "POOR",
-  },
-  severe: {
-    border: "border-l-red-600",
-    shadow: "shadow-[0_8px_24px_-12px] shadow-red-600/50",
-    badgeBg: "bg-red-600",
-    badgeText: "text-white",
-    badge: "SEVERE",
-  },
-};
 
 const PANEL_ICONS = {
   Heat: SunIcon,
@@ -124,11 +86,14 @@ export default async function Home() {
           <ClimateCard title="Rain & flood" panel={snapshot.rainFlood} />
         </div>
 
-        <p className="text-xs text-zinc-500 dark:text-zinc-400">
-          Heat and air readings come from Open-Meteo&apos;s weather and air quality feeds.
-          River flow comes from Open-Meteo&apos;s flood feed, a large-scale model — not an
-          official Mumbai flood warning.
-        </p>
+        <div className="flex flex-wrap items-center justify-between gap-2">
+          <p className="text-xs text-zinc-500 dark:text-zinc-400">
+            Heat and air readings come from Open-Meteo&apos;s weather and air quality feeds.
+            River flow comes from Open-Meteo&apos;s flood feed, a large-scale model — not an
+            official Mumbai flood warning.
+          </p>
+          <LevelsKeyModal />
+        </div>
 
         <WaveDivider />
 

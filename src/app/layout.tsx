@@ -4,16 +4,14 @@ import { ThemeToggle } from "@/components/ThemeToggle";
 import "./globals.css";
 
 // Runs before the page paints, so the site never flashes the wrong theme for
-// a split second. It reads the visitor's saved choice (if any), falls back to
-// their system setting, and writes it onto <html> as a data-theme attribute —
+// a split second. It reads the visitor's saved choice (if any) and otherwise
+// defaults to dark, then writes it onto <html> as a data-theme attribute —
 // which the CSS in globals.css and every "dark:" class then reacts to.
 const THEME_INIT_SCRIPT = `
 (function () {
   try {
     var stored = localStorage.getItem("theme");
-    var theme = stored === "light" || stored === "dark"
-      ? stored
-      : (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+    var theme = stored === "light" || stored === "dark" ? stored : "dark";
     document.documentElement.setAttribute("data-theme", theme);
   } catch (e) {}
 })();

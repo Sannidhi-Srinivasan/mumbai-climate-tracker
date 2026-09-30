@@ -34,6 +34,49 @@ export type ClimateSnapshot = {
   activeConditions: Condition[];
 };
 
+// The exact cutoffs that decide each panel's GOOD / MODERATE / POOR / SEVERE
+// level. Each field is the value at which that level STARTS (so "good" runs
+// from 0 up to, but not including, moderate's cutoff). These are the same
+// numbers the levels-key popup on the page reads and displays, so the two
+// can never drift apart.
+//
+// Heat and rain are calibrated to Mumbai specifically, using IMD's own
+// criteria, rather than generic thresholds that would fit a drier or less
+// humid city:
+// - Heat: Mumbai's coastal humidity (75% average, up to 89% in monsoon) pushes
+//   the feels-like temperature 5-8°C above the actual air temperature, so
+//   "moderate" starts higher than it would for a drier inland city. "Poor"
+//   approaches IMD's coastal heatwave criterion (37°C+ actual); "severe"
+//   enters the internationally-used heat-index "danger" band.
+// - Rain: IMD publishes an official daily-rainfall scale (light/moderate/
+//   heavy/very heavy/extremely heavy). "Moderate" here covers IMD's light
+//   and moderate rain (an ordinary monsoon day); "poor" covers IMD's heavy
+//   and very heavy rain; "severe" is reserved for IMD's extremely heavy
+//   band — disaster-scale rainfall, like the 944mm that fell on 26 July 2005.
+export const HEAT_LEVELS = {
+  moderateAt: 32, // °C feels-like
+  poorAt: 38,
+  severeAt: 42,
+};
+
+export const AIR_LEVELS = {
+  moderateAt: 51, // US AQI
+  poorAt: 101,
+  severeAt: 151,
+};
+
+export const RAIN_LEVELS = {
+  moderateAt: 0.1, // mm of rain today
+  poorAt: 64.5,
+  severeAt: 204.5,
+};
+
+export const FLOOD_LEVELS = {
+  moderateAt: 100, // river flow, % of the long-term normal for the day
+  poorAt: 120,
+  severeAt: 150,
+};
+
 // "Fetch" means: ask another service on the internet for data and wait for its answer.
 // All three services below are Open-Meteo's free feeds — no sign-up or API key needed,
 // which keeps this project simple while you're learning.
@@ -73,13 +116,13 @@ async function fetchHeat(): Promise<{ panel: Panel; feelsLikeC: number | null }>
   let label = "Unknown";
   let level: Level = "moderate";
   if (feelsLikeC !== null) {
-    if (feelsLikeC < 30) {
+    if (feelsLikeC < HEAT_LEVELS.moderateAt) {
       label = "Comfortable";
       level = "good";
-    } else if (feelsLikeC < 35) {
+    } else if (feelsLikeC < HEAT_LEVELS.poorAt) {
       label = "Warm";
       level = "moderate";
-    } else if (feelsLikeC < 40) {
+    } else if (feelsLikeC < HEAT_LEVELS.severeAt) {
       label = "Hot";
       level = "poor";
     } else {
@@ -114,13 +157,13 @@ async function fetchAir(): Promise<{ panel: Panel; usAqi: number | null }> {
   let label = "Unknown";
   let level: Level = "moderate";
   if (usAqi !== null) {
-    if (usAqi <= 50) {
+    if (usAqi < AIR_LEVELS.moderateAt) {
       label = "Good";
       level = "good";
-    } else if (usAqi <= 100) {
+    } else if (usAqi < AIR_LEVELS.poorAt) {
       label = "Moderate";
       level = "moderate";
-    } else if (usAqi <= 150) {
+    } else if (usAqi < AIR_LEVELS.severeAt) {
       label = "Unhealthy for sensitive groups";
       level = "poor";
     } else {
@@ -192,16 +235,19 @@ async function fetchRainFlood(): Promise<{
       : null;
 
   let level: Level = "good";
-  if ((rainMm !== null && rainMm >= 30) || (dischargeRatio !== null && dischargeRatio >= 150)) {
+  if (
+    (rainMm !== null && rainMm >= RAIN_LEVELS.severeAt) ||
+    (dischargeRatio !== null && dischargeRatio >= FLOOD_LEVELS.severeAt)
+  ) {
     level = "severe";
   } else if (
-    (rainMm !== null && rainMm >= 10) ||
-    (dischargeRatio !== null && dischargeRatio >= 120)
+    (rainMm !== null && rainMm >= RAIN_LEVELS.poorAt) ||
+    (dischargeRatio !== null && dischargeRatio >= FLOOD_LEVELS.poorAt)
   ) {
     level = "poor";
   } else if (
-    (rainMm !== null && rainMm > 0) ||
-    (dischargeRatio !== null && dischargeRatio >= 100)
+    (rainMm !== null && rainMm >= RAIN_LEVELS.moderateAt) ||
+    (dischargeRatio !== null && dischargeRatio >= FLOOD_LEVELS.moderateAt)
   ) {
     level = "moderate";
   }
@@ -241,17 +287,21 @@ function computeActiveConditions(
 ): Condition[] {
   const conditions: Condition[] = ["any"];
 
+  // "heat-high" triggers a bit before the panel's own "poor" cutoff (35°C vs
+  // 38°C) — high enough that it doesn't fire on nearly every Mumbai day, but
+  // early enough to surface shade/water actions before things get properly hot.
+  const HEAT_HIGH_AT = 35;
   if (feelsLikeC !== null) {
-    if (feelsLikeC >= 30) conditions.push("heat-high");
-    if (feelsLikeC >= 40) conditions.push("heat-extreme");
+    if (feelsLikeC >= HEAT_HIGH_AT) conditions.push("heat-high");
+    if (feelsLikeC >= HEAT_LEVELS.severeAt) conditions.push("heat-extreme");
     if (feelsLikeC <= -15) conditions.push("cold-extreme");
   }
   if (usAqi !== null) {
-    if (usAqi >= 51 && usAqi <= 100) conditions.push("air-moderate");
-    if (usAqi > 100) conditions.push("air-high");
+    if (usAqi >= AIR_LEVELS.moderateAt && usAqi < AIR_LEVELS.poorAt) conditions.push("air-moderate");
+    if (usAqi >= AIR_LEVELS.poorAt) conditions.push("air-high");
   }
-  if (rainMm !== null && rainMm >= 25) conditions.push("rain-heavy");
-  if (dischargeRatio !== null && dischargeRatio >= 150) conditions.push("flood-risk");
+  if (rainMm !== null && rainMm >= RAIN_LEVELS.poorAt) conditions.push("rain-heavy");
+  if (dischargeRatio !== null && dischargeRatio >= FLOOD_LEVELS.severeAt) conditions.push("flood-risk");
 
   return conditions;
 }
